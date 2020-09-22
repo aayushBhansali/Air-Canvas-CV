@@ -1,17 +1,18 @@
+# Air-Canvas-CV v1.0
+# Use something green coloured to draw
+# Press Esc to quit capturing
+# Press Space to cleat the Canvas
+# Press Z to change the color
+
 import random
 import cv2
 import imutils
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
-from matplotlib import colors
 import numpy as np
 
 cam = cv2.VideoCapture(0)
 
-# Define color thresholding and mask
-
-# Lower blue
+# Lower green
 lower_green = np.array([25, 50, 0])
 high_green = np.array([102, 255, 255])
 
@@ -21,14 +22,14 @@ color = (0, 0, 0)
 while(True):
     ret, frame = cam.read()
 
+    # Invert the image to make it easy to make sense of what youare doing
     frame = cv2.flip(frame, 1)
 
     if not ret:
         print("Failed to grab cam")
         break
 
-    # cv2.imshow("Test", frame)
-
+    # Tried HSV Color scale but not sure about the sensitivity to changing luminescence
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, lower_green, high_green)
 
@@ -66,22 +67,10 @@ while(True):
         left, top = np.min(boxes, axis=0)[:2]
         right, bottom = np.max(boxes, axis=0)[2:]
 
-        # center = (left + right // 2, top + bottom // 2
-
         points.append(boxes[0])
-        # cv2.rectangle(frame, (left,top), (right,bottom), (255, 0, 0), 2)
+
     cv2.imshow("Frame", frame)
-    # print("Loop end")
 
 cam.release()
 cv2.destroyAllWindows()
 
-
-
-
-
-
-
-# cv2.imshow("original", image)
-# # cv2.imshow("images", thresh)
-# cv2.waitKey(0)
