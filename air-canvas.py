@@ -17,7 +17,7 @@ lower_green = np.array([25, 50, 0])
 high_green = np.array([102, 255, 255])
 
 points = []
-color = (0, 0, 0)
+color = (255, 0, 255)
 
 while(True):
     ret, frame = cam.read()
